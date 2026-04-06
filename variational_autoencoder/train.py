@@ -31,7 +31,7 @@ MODEL = VAEModel(latent_dim=16).to(DEVICE)
 OPTIM = torch.optim.Adam(MODEL.parameters(), lr=1e-3)
 SCHED = torch.optim.lr_scheduler.CosineAnnealingLR(OPTIM, T_max=50)
 
-EPOCHS = 50
+EPOCHS = 15
 
 
 def train():
