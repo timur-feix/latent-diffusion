@@ -14,7 +14,7 @@ DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 perceptual = PerceptualLoss().to(DEVICE)
 
-def vae_loss(x, x_hat, mu, log_var, kl_weight=1e-6, perc_weight=0.1):
+def vae_loss(x, x_hat, mu, log_var, kl_weight=1e-6, perc_weight=3):
     recon = functional.mse_loss(x_hat, x, reduction="sum") / x.shape[0]
     kl = -0.5 * torch.sum(1 + log_var - mu.pow(2) - log_var.exp()) / x.shape[0]
     perc = perceptual(x, x_hat)
@@ -40,7 +40,6 @@ def train():
     sched_lrs = []
 
     with tqdm(total=EPOCHS * len(TRAIN_LOADER), desc="training vae") as train_progress:
-        print("message to confirm it did really update")
         for epoch in range(EPOCHS):
             MODEL.train()
             total_loss = 0
