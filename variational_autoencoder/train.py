@@ -19,7 +19,7 @@ def vae_loss(x, x_hat, mu, log_var, kl_weight=1e-6, perc_weight=0.1):
     kl = -0.5 * torch.sum(1 + log_var - mu.pow(2) - log_var.exp()) / x.shape[0]
     perc = perceptual(x, x_hat)
 
-    return recon + kl_weight * kl + perc_weight * perc, recon, kl
+    return recon + kl_weight * kl + perc_weight * perc, recon, kl, perc
 
 
 def print_output(losses, sched_lrs):
@@ -40,6 +40,7 @@ def train():
     sched_lrs = []
 
     with tqdm(total=EPOCHS * len(TRAIN_LOADER), desc="training vae") as train_progress:
+        print("message to confirm it did really update")
         for epoch in range(EPOCHS):
             MODEL.train()
             total_loss = 0
@@ -48,7 +49,7 @@ def train():
                 batch = batch.to(DEVICE)
                 x_hat, mu, log_var = MODEL(batch)
 
-                loss, recon, kl = vae_loss(batch, x_hat, mu, log_var)
+                loss, recon, kl, perc = vae_loss(batch, x_hat, mu, log_var)
 
                 OPTIM.zero_grad()
                 loss.backward()
