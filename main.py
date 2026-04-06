@@ -24,12 +24,9 @@ def show_reconstructions(model, loader, device, n=8):
     plt.tight_layout()
     plt.show()
 
-def main():
+def run_main():
     # model = train()
     model = VAEModel(latent_dim=16).to(DEVICE)
     ckpt = torch.load("checkpoints/last.pt", map_location=DEVICE)
     model.load_state_dict(ckpt["model"])
     show_reconstructions(model, TEST_LOADER, DEVICE)
-
-if __name__ == "__main__":
-    main()
