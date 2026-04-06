@@ -14,12 +14,12 @@ DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 perceptual = PerceptualLoss().to(DEVICE)
 
-def vae_loss(x, x_hat, mu, log_var, kl_weight=1e-6, perc_weight=3):
+def vae_loss(x, x_hat, mu, log_var, kl_weight=1e-6, perc_weight=2):
     recon = functional.mse_loss(x_hat, x, reduction="sum") / x.shape[0]
     kl = -0.5 * torch.sum(1 + log_var - mu.pow(2) - log_var.exp()) / x.shape[0]
     perc = perceptual(x, x_hat)
 
-    return recon + kl_weight * kl + perc_weight * perc, recon, kl, perc
+    return 0.65 * recon + kl_weight * kl + perc_weight * perc, recon, kl, perc
 
 
 def print_output(losses, sched_lrs):
@@ -31,7 +31,7 @@ MODEL = VAEModel(latent_dim=16).to(DEVICE)
 OPTIM = torch.optim.Adam(MODEL.parameters(), lr=1e-3)
 SCHED = torch.optim.lr_scheduler.CosineAnnealingLR(OPTIM, T_max=50)
 
-EPOCHS = 15
+EPOCHS = 50
 
 
 def train():
