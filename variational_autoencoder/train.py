@@ -14,12 +14,12 @@ DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 perceptual = PerceptualLoss().to(DEVICE)
 
-def vae_loss(x, x_hat, mu, log_var, kl_weight=1e-6, perc_weight=2):
+def vae_loss(x, x_hat, mu, log_var, kl_weight=1e-6, perc_weight=5):
     recon = functional.mse_loss(x_hat, x, reduction="sum") / x.shape[0]
     kl = -0.5 * torch.sum(1 + log_var - mu.pow(2) - log_var.exp()) / x.shape[0]
     perc = perceptual(x, x_hat)
 
-    return 0.65 * recon + kl_weight * kl + perc_weight * perc, recon, kl, perc
+    return 0.1 * recon + kl_weight * kl + perc_weight * perc, recon, kl, perc
 
 
 def print_output(losses, sched_lrs):
@@ -36,6 +36,7 @@ EPOCHS = 50
 
 def train():
     best_loss = float("inf")
+    print("DEBUG: THIS IS THE RIGHT ONE")
     losses = []
     sched_lrs = []
 
