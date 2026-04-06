@@ -1,6 +1,7 @@
 from dataset_utils import cifar10
 from variational_autoencoder.model import VariationalAutoencoder as VAEModel
 from functional_utils.save_checkpoint import save_checkpoint
+from perceptual_loss.perceptual_loss import PerceptualLoss
 
 import torch.nn.functional as functional
 import torch
@@ -11,12 +12,14 @@ from pathlib import Path
 TRAIN_LOADER, VALIDATION_LOADER, TEST_LOADER = cifar10.dataloaders()
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
+perceptual = PerceptualLoss().to(DEVICE)
 
-def vae_loss(x, x_hat, mu, log_var, kl_weight=1e-6):
+def vae_loss(x, x_hat, mu, log_var, kl_weight=1e-6, perc_weight=0.1):
     recon = functional.mse_loss(x_hat, x, reduction="sum") / x.shape[0]
     kl = -0.5 * torch.sum(1 + log_var - mu.pow(2) - log_var.exp()) / x.shape[0]
+    perc = perceptual(x, x_hat)
 
-    return recon + kl_weight * kl, recon, kl
+    return recon + kl_weight * kl + perc_weight * perc, recon, kl
 
 
 def print_output(losses, sched_lrs):
