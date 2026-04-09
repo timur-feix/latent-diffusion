@@ -40,6 +40,6 @@ def dataloaders(batch_size=64):
 
     test_dataloader = DataLoader(test_dataset,
                                  batch_size=batch_size,
-                                 shuffle=False)
+                                 shuffle=True)
 
     return train_dataloader, validation_dataloader, test_dataloader
