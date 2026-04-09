@@ -1,4 +1,4 @@
-from dataset_utils import cifar10
+from dataset_utils import STL10
 from variational_autoencoder.model import VariationalAutoencoder as VAEModel
 from functional_utils.save_checkpoint import save_checkpoint
 
@@ -8,7 +8,7 @@ import torch
 from tqdm import tqdm
 from pathlib import Path
 
-TRAIN_LOADER, VALIDATION_LOADER, TEST_LOADER = cifar10.dataloaders()
+TRAIN_LOADER, VALIDATION_LOADER, TEST_LOADER = STL10.dataloaders()
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 
