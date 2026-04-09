@@ -33,7 +33,7 @@ EPOCHS = 70
 
 def train():
     best_loss = float("inf")
-    print("DEBUG: THIS IS THE RIGHT ONE with 70 epochs and revised architecture")
+    print("DEBUG: THIS IS THE RIGHT ONE with STL10")
     losses = []
     sched_lrs = []
 
