@@ -13,7 +13,7 @@ import torch
 #   [64, 128]                         → 2 downsamples, latent 8x8 (less compression)
 #   [32, 64, 64, 64, 128, 128, 128]  → 3 downsamples, deeper refine blocks
 
-CHANNEL_MAP = [64, 64, 128, 128, 256, 256]
+CHANNEL_MAP = [64, 64, 128, 128, 256, 256, 512, 512]
 
 
 # ── Building blocks ──────────────────────────────────────────────────
