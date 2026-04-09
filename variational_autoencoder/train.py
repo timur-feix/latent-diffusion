@@ -24,16 +24,16 @@ def print_output(losses, sched_lrs):
         print(f"epoch {epoch + 1} | loss {losses[epoch]:.4f} | lr {sched_lrs[epoch]:.6f}")
 
 
-MODEL = VAEModel(latent_dim=4).to(DEVICE)
+MODEL = VAEModel(latent_dim=8).to(DEVICE)
 OPTIM = torch.optim.Adam(MODEL.parameters(), lr=1e-3)
-SCHED = torch.optim.lr_scheduler.CosineAnnealingLR(OPTIM, T_max=50)
+SCHED = torch.optim.lr_scheduler.CosineAnnealingLR(OPTIM, T_max=70)
 
-EPOCHS = 50
+EPOCHS = 70
 
 
 def train():
     best_loss = float("inf")
-    print("DEBUG: THIS IS THE RIGHT ONE")
+    print("DEBUG: THIS IS THE RIGHT ONE with 70 epochs and revised architecture")
     losses = []
     sched_lrs = []
 
