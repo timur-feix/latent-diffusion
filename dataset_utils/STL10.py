@@ -5,7 +5,7 @@ from torchvision.datasets import STL10
 
 torch.manual_seed(1)
 transform = Compose([
-    Resize((32, 32)),
+    Resize((96, 96)),
     ToTensor()
 ])
 
