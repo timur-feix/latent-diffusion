@@ -33,7 +33,6 @@ EPOCHS = 40
 
 def train():
     best_loss = float("inf")
-    print("DEBUG: THIS IS THE RIGHT ONE with STL10 96x96 and 40 epochs")
     losses = []
     sched_lrs = []
 

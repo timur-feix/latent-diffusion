@@ -25,6 +25,8 @@ def show_reconstructions(model, loader, device, n=8):
     plt.show()
 
 def run_main():
+    print("DEBUG: THIS IS THE RIGHT ONE with STL10 96x96 and 40 epochs and low")
+
     model = train()
     # model = VAEModel(latent_dim=4).to(DEVICE)
     # ckpt = torch.load("checkpoints/last.pt", map_location=DEVICE)
